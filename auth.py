@@ -132,6 +132,11 @@ def usage_sidebar():
         st.caption(f"**Messages remaining:** {remaining} / {limit}")
         if remaining <= 5 and remaining > 0:
             st.warning(f"Only {remaining} messages remaining on this code.")
+        st.markdown("---")
+        st.markdown(
+            "📝 **[Share your feedback](https://forms.gle/Na4JCYTzWi5Yej727)**"
+        )
+        st.caption("3 minutes — your honest reaction shapes what gets built next.")
         if st.button("Log out"):
             for key in ["access_code", "message_limit", "messages_used"]:
                 if key in st.session_state:

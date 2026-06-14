@@ -142,12 +142,53 @@ If you're piloting this in a classroom, see the **Persona Guide** page in the
 menu for character-by-character notes on themes, suggested discussion
 questions, and curriculum connections.
 
-We'd love your feedback — there's a short survey linked in the sidebar of
-every character page.
+There's a short feedback survey linked in the sidebar of every character page.
+Your honest reaction — including what doesn't work — is exactly what this
+project needs.
+
+---
+
+### About this project
+
+Hi — I'm Pete O. I have no background in education, and I had no experience
+writing code before I built this. I have a regular day job, completely
+unrelated to either of those things.
+
+I came to this project by watching where AI and graphics technology were
+heading and thinking: this combination -- AI-driven conversation with
+historical figures, grounded in real research -- seemed like something
+genuinely useful that I hadn't seen done before. So I tried to build it.
+
+**Everything you're seeing is AI-generated.** The conversations are powered
+by AI trained on historical research. The voices are AI-generated
+approximations -- not real recordings of Churchill or Eisenhower. They're
+a starting point for curiosity, not a finished performance or a substitute
+for primary sources.
+
+**This is a prototype, and I'm looking for honest feedback -- not
+encouragement.** The question I'm trying to answer is whether this is
+worth building further, by me or by people with more expertise in education
+and software than I have.
+
+If it is worth building, here is where it could go next:
+
+- **Photorealistic avatars** for each character -- using tools like Unreal
+  Engine, each person rendered as a lifelike human face
+- **VR headsets** -- imagine sitting across from Eisenhower the night before
+  D-Day, in the room with him, rather than reading text on a screen
+- **A mobile app** for independent or out-of-classroom use
+
+I would genuinely value your thoughts on all of it -- the conversations as
+they stand, the voices, and whether the avatar/VR/mobile direction seems
+worth pursuing for your students.
+
+Email me directly: **livinghistorypete@gmail.com**
+
+-- Pete O
 
 ---
 
 *History Lives is a prototype under active development.
-Built with care, and with the belief that understanding where someone else
-stood is the beginning of understanding anything else about them.*
+Built with the belief that understanding where someone else stood
+is the beginning of understanding anything else about them.*
 """)
