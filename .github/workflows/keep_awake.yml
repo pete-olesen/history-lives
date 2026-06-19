@@ -2,39 +2,46 @@ name: Keep Streamlit Awake
 
 on:
   schedule:
-    # Runs every 2 hours
     - cron: '0 */2 * * *'
   workflow_dispatch:
-    # Allows manual trigger from GitHub Actions tab
 
 jobs:
   wake:
     runs-on: ubuntu-latest
     steps:
-      - name: Wake up History Lives
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Playwright
         run: |
-          echo "Pinging History Lives at $(date)"
-          curl -L \
-            --max-redirs 10 \
-            --max-time 60 \
-            --retry 3 \
-            --retry-delay 10 \
-            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            -o /dev/null \
-            -w "HTTP Status: %{http_code}\nTime: %{time_total}s\n" \
-            "https://history-lives-pete.streamlit.app" || true
+          pip install playwright
+          playwright install chromium --with-deps
 
-          echo "Waiting 15 seconds before second ping to ensure wake-up..."
-          sleep 15
+      - name: Wake up History Lives with real browser
+        run: |
+          python -c "
+          from playwright.sync_api import sync_playwright
+          import time
 
-          curl -L \
-            --max-redirs 10 \
-            --max-time 60 \
-            --retry 3 \
-            --retry-delay 10 \
-            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            -o /dev/null \
-            -w "HTTP Status: %{http_code}\nTime: %{time_total}s\n" \
-            "https://history-lives-pete.streamlit.app" || true
-
-          echo "Done at $(date)"
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              print('Visiting site...')
+              page.goto('https://history-lives-pete.streamlit.app', timeout=60000, wait_until='networkidle')
+              print('Page loaded, waiting for app to fully wake...')
+              time.sleep(10)
+              # Click the wake-up button if it exists
+              try:
+                  button = page.get_by_text('Yes, get this app back up')
+                  if button.is_visible(timeout=3000):
+                      print('Found wake button, clicking...')
+                      button.click()
+                      time.sleep(15)
+              except Exception as e:
+                  print('No wake button found (app may already be awake):', e)
+              print('Final page title:', page.title())
+              browser.close()
+              print('Done')
+          "
