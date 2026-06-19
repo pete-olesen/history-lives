@@ -15,11 +15,26 @@ jobs:
         run: |
           echo "Pinging History Lives at $(date)"
           curl -L \
+            --max-redirs 10 \
             --max-time 60 \
             --retry 3 \
             --retry-delay 10 \
             --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -o /dev/null \
             -w "HTTP Status: %{http_code}\nTime: %{time_total}s\n" \
-            "https://history-lives-pete.streamlit.app"
+            "https://history-lives-pete.streamlit.app" || true
+
+          echo "Waiting 15 seconds before second ping to ensure wake-up..."
+          sleep 15
+
+          curl -L \
+            --max-redirs 10 \
+            --max-time 60 \
+            --retry 3 \
+            --retry-delay 10 \
+            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -o /dev/null \
+            -w "HTTP Status: %{http_code}\nTime: %{time_total}s\n" \
+            "https://history-lives-pete.streamlit.app" || true
+
           echo "Done at $(date)"
