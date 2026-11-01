@@ -85,7 +85,7 @@ def get_ai_response(messages, api_key, system_prompt):
             for m in messages
             if m["role"] in ("user", "assistant")
         ],
-        temperature=0.9
+        
     )
     return response.content[0].text
 
